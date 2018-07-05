@@ -24,11 +24,11 @@ import (
 
 // RootCmd represents the base command when called without any subcommands
 var RootCmd = &cobra.Command{
-	Use:   "chorus",
+	Use:   "ann",
 	Short: "Proof-of-stake blockchain from Annchain Technology",
 	Long: `
-This is the binary of the Chorus developed by Annchain Technology.
-The project's code name is chorus, cause we wanna mimic the structure of Human chorus. With our chain, you can run multiple subchains in each node simultaneously to form a very sophisticated network which will represent your role in many different organizations.
+This is the binary of the ann developed by Annchain Technology.
+The project's code name is ann, cause we wanna mimic the structure of Human ann. With our chain, you can run multiple subchains in each node simultaneously to form a very sophisticated network which will represent your role in many different organizations.
 `,
 	Run: func(cmd *cobra.Command, args []string) {
 		if err := cmd.Help(); err != nil {
@@ -54,7 +54,7 @@ func init() {
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
 	RootCmd.PersistentFlags().StringP("runtime", "r", "", fmt.Sprintf("angine runtime dir (default is $ANGINE_RUNTIME/%v)", config.DEFAULT_RUNTIME))
-	RootCmd.PersistentFlags().StringP("config", "c", "", "config file (default is $CIVIL_CONFPATH/.chorus.toml)")
+	RootCmd.PersistentFlags().StringP("config", "c", "", "config file (default is $CIVIL_CONFPATH/.ann.toml)")
 
 	viper.BindPFlag("runtime", RootCmd.PersistentFlags().Lookup("runtime"))
 	viper.BindPFlag("config", RootCmd.PersistentFlags().Lookup("config"))
@@ -70,7 +70,7 @@ func init() {
 // 		viper.SetConfigFile(cfgFile)
 // 	} else {
 // 		viper.AddConfigPath(CivilPath())
-// 		viper.SetConfigName(".chorus")
+// 		viper.SetConfigName(".ann")
 // 	}
 // 	// If a config file is found, read it in.
 // 	if err := viper.ReadInConfig(); err == nil {

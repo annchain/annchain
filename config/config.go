@@ -1,4 +1,4 @@
-// Copyright 2017 ZhongAn Information Technology Services Co.,Ltd.
+// Copyright 2017 Annchain Information Technology Services Co.,Ltd.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -143,7 +143,7 @@ func genPrivFile(path string) *types.PrivValidator {
 func genGenesiFile(path string, chainId string, gVals []types.GenesisValidator) (*types.GenesisDoc, error) {
 	if len(chainId) == 0 {
 		// chainID = cmn.Fmt("annchain-%v", cmn.RandStr(6))
-		chainId = "chorus"
+		chainId = "ann"
 	}
 	genDoc := &types.GenesisDoc{
 		ChainID: chainId,

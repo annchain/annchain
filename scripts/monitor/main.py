@@ -78,7 +78,7 @@ def render_report(all_results):
 
     env = Environment(loader=FileSystemLoader(searchpath='.'), trim_blocks=True, lstrip_blocks=True)
     template = env.get_template('report.template.html')
-    title = 'Chorus: %s %s' % (overall['status'], overall['time'])
+    title = 'ann: %s %s' % (overall['status'], overall['time'])
     html = template.render(headers=headers, lines=all_results, overall=overall)
     return title, html
 

@@ -57,7 +57,7 @@ query result: 9
 部署合约
 
 ```
-./anntool --backend="tcp://0.0.0.0:52001" contract create --callf /Users/wicky/workspace/src/gitlab.zhonganonline.com/ann/test/ann-chain/sample.json --abif /Users/wicky/workspace/src/gitlab.zhonganonline.com/ann/test/ann-chain/sample.abi --nonce 9
+./anntool --backend="tcp://0.0.0.0:52001" contract create --callf /Users/wicky/workspace/src/gitlab.Annchainonline.com/ann/test/ann-chain/sample.json --abif /Users/wicky/workspace/src/gitlab.Annchainonline.com/ann/test/ann-chain/sample.abi --nonce 9
 
 tx result: 0x0a6827ac6ca51a6003b5b4408163091fdc0cfb5c1ddbd98b19b632da9d3e7815
 contract address: 0xaae2ea74bf2287f23998b731c97e6c82389d93f2
@@ -68,7 +68,7 @@ contract address: 0xaae2ea74bf2287f23998b731c97e6c82389d93f2
 查询合约是否存在
 
 ```
-./anntool --backend="tcp://0.0.0.0:52001" contract exist --callf /Users/wicky/workspace/src/gitlab.zhonganonline.com/ann/test/ann-chain/sample_exist.json
+./anntool --backend="tcp://0.0.0.0:52001" contract exist --callf /Users/wicky/workspace/src/gitlab.Annchainonline.com/ann/test/ann-chain/sample_exist.json
 
 Yes!!!
 ```
@@ -86,7 +86,7 @@ query result: 10
 call
 
 ```
-./anntool --backend="tcp://0.0.0.0:52001" contract execute --callf /Users/wicky/workspace/src/gitlab.zhonganonline.com/ann/test/ann-chain/sample_execute.json --abif /Users/wicky/workspace/src/gitlab.zhonganonline.com/ann/test/ann-chain/sample.abi --nonce 10
+./anntool --backend="tcp://0.0.0.0:52001" contract execute --callf /Users/wicky/workspace/src/gitlab.Annchainonline.com/ann/test/ann-chain/sample_execute.json --abif /Users/wicky/workspace/src/gitlab.Annchainonline.com/ann/test/ann-chain/sample.abi --nonce 10
 
 call data: a6226f2100000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000064
 ```
@@ -104,7 +104,7 @@ query result: 11
 read
 
 ```
-./anntool --backend="tcp://0.0.0.0:52001" contract read --callf /Users/wicky/workspace/src/gitlab.zhonganonline.com/ann/test/ann-chain/sample_read.json --abif /Users/wicky/workspace/src/gitlab.zhonganonline.com/ann/test/ann-chain/sample.abi --nonce 11
+./anntool --backend="tcp://0.0.0.0:52001" contract read --callf /Users/wicky/workspace/src/gitlab.Annchainonline.com/ann/test/ann-chain/sample_read.json --abif /Users/wicky/workspace/src/gitlab.Annchainonline.com/ann/test/ann-chain/sample.abi --nonce 11
 
 query result: 0000000000000000000000000000000000000000000000000000000000000064
 parse result: *big.Int 100

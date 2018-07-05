@@ -10,7 +10,7 @@ def send(receivers, subject, html,):
 
     # me == my email address
     # you == recipient's email address
-    me = "noreply@chorus"
+    me = "noreply@ann"
     you = ','.join(receivers)
 
     # Create message container - the correct MIME type is multipart/alternative.

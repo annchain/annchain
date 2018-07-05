@@ -1,10 +1,23 @@
+// Copyright 2017 Annchain Information Technology Services Co.,Ltd.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 package test
 
 import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/annchain/annchain/angine/types"
 	"io/ioutil"
 	"os"
 	"os/exec"
@@ -12,6 +25,8 @@ import (
 	"strconv"
 	"testing"
 	"time"
+
+	"github.com/annchain/annchain/angine/types"
 )
 
 /*
@@ -56,7 +71,7 @@ func TestShareTransfer(t *testing.T) {
 	}
 	go func() {
 		args := []string{"share", "send", "--nodeprivkey", nodeprivkey, "--evmprivkey", senderpriv, "--to", shareReceiver, "--value", "888", "--nonce", strconv.FormatUint(nonce, 10)}
-		_, err := exec.Command(chorustoolPath, args...).Output()
+		_, err := exec.Command(anntoolPath, args...).Output()
 		if err != nil {
 			t.Error(err)
 		}
@@ -65,7 +80,7 @@ func TestShareTransfer(t *testing.T) {
 	<-msg
 	time.Sleep(time.Second * 1)
 	args := []string{"query", "share", "--account_pubkey", shareReceiver}
-	outs, err := exec.Command(chorustoolPath, args...).Output()
+	outs, err := exec.Command(anntoolPath, args...).Output()
 	if err != nil {
 		t.Error(err)
 	}
@@ -80,13 +95,13 @@ func TestGuaranty(t *testing.T) {
 		t.Error(err)
 	}
 	arg := []string{"query", "share", "--account_pubkey", nodepub}
-	out1, err := exec.Command(chorustoolPath, arg...).Output()
+	out1, err := exec.Command(anntoolPath, arg...).Output()
 	if err != nil {
 		t.Error(err)
 	}
 	go func() {
 		args := []string{"share", "guarantee", "--nodeprivkey", nodeprivkey, "--evmprivkey", senderpriv, "--value", "123", "--nonce", strconv.FormatUint(nonce, 10)}
-		_, err := exec.Command(chorustoolPath, args...).Output()
+		_, err := exec.Command(anntoolPath, args...).Output()
 		if err != nil {
 			t.Error(err)
 		}
@@ -94,7 +109,7 @@ func TestGuaranty(t *testing.T) {
 	}()
 	<-msg
 	time.Sleep(time.Second * 1)
-	out2, err := exec.Command(chorustoolPath, arg...).Output()
+	out2, err := exec.Command(anntoolPath, arg...).Output()
 	if err != nil {
 		t.Error(err)
 	}
@@ -111,13 +126,13 @@ func TestRedeem(t *testing.T) {
 		t.Error(err)
 	}
 	arg := []string{"query", "share", "--account_pubkey", nodepub}
-	out1, err := exec.Command(chorustoolPath, arg...).Output()
+	out1, err := exec.Command(anntoolPath, arg...).Output()
 	if err != nil {
 		t.Error(err)
 	}
 	go func() {
 		args := []string{"share", "redeem", "--nodeprivkey", nodeprivkey, "--evmprivkey", senderpriv, "--value", "123", "--nonce", strconv.FormatUint(nonce, 10)}
-		_, err := exec.Command(chorustoolPath, args...).Output()
+		_, err := exec.Command(anntoolPath, args...).Output()
 		if err != nil {
 			t.Error(err)
 		}
@@ -125,7 +140,7 @@ func TestRedeem(t *testing.T) {
 	}()
 	<-msg
 	time.Sleep(time.Second * 1)
-	out2, err := exec.Command(chorustoolPath, arg...).Output()
+	out2, err := exec.Command(anntoolPath, arg...).Output()
 	if err != nil {
 		t.Error(err)
 	}

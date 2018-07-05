@@ -1,0 +1,89 @@
+package commands
+
+import (
+	"fmt"
+	"math/big"
+
+	agtypes "github.com/annchain/annchain/angine/types"
+	"github.com/annchain/annchain/eth/common"
+	"github.com/annchain/annchain/eth/crypto"
+	"github.com/annchain/annchain/tools"
+	"github.com/annchain/annchain/types"
+	"gopkg.in/urfave/cli.v1"
+
+	"github.com/annchain/annchain/client/commons"
+	cl "github.com/annchain/annchain/module/lib/go-rpc/client"
+)
+
+var (
+	TxCommands = cli.Command{
+		Name:     "tx",
+		Usage:    "operations for transaction",
+		Category: "Transaction",
+		Subcommands: []cli.Command{
+			{
+				Name:   "send",
+				Usage:  "send a transaction",
+				Action: sendTx,
+				Flags: []cli.Flag{
+					anntoolFlags.payload,
+					anntoolFlags.privkey,
+					anntoolFlags.nonce,
+					anntoolFlags.to,
+					anntoolFlags.value,
+				},
+			},
+		},
+	}
+)
+
+func sendTx(ctx *cli.Context) error {
+	skbs := ctx.String("privkey")
+	privkey, err := crypto.HexToECDSA(skbs)
+	if err != nil {
+		panic(err)
+	}
+
+	nonce := ctx.Uint64("nonce")
+	to := common.HexToAddress(ctx.String("to"))
+	value := ctx.Int64("value")
+	payload := ctx.String("payload")
+	data := common.Hex2Bytes(payload)
+
+	bodyTx := types.TxEvmCommon{
+		To:     to[:],
+		Amount: big.NewInt(value),
+		Load:   data,
+	}
+	fmt.Printf("%+v\n", bodyTx)
+	bodyBs, err := tools.ToBytes(bodyTx)
+	if err != nil {
+		return cli.NewExitError(err.Error(), 127)
+	}
+	fmt.Printf("bodyBs: %#x\n", bodyBs)
+
+	from := crypto.PubkeyToAddress(privkey.PublicKey)
+	fmt.Printf("%x\n", from)
+	tx := types.NewBlockTx(big.NewInt(90000), big.NewInt(2), nonce, from[:], bodyBs)
+
+	if tx.Signature, err = tools.SignSecp256k1(tx, crypto.FromECDSA(privkey)); err != nil {
+		return cli.NewExitError(err.Error(), 127)
+	}
+
+	b, err := tools.ToBytes(tx)
+	if err != nil {
+		return cli.NewExitError(err.Error(), 127)
+	}
+
+	tmResult := new(agtypes.ResultBroadcastTxCommit)
+	clientJSON := cl.NewClientJSONRPC(logger, commons.QueryServer)
+	_, err = clientJSON.Call("broadcast_tx_commit", []interface{}{agtypes.WrapTx(types.TxTagAppEvmCommon, b)}, tmResult)
+	if err != nil {
+		panic(err)
+	}
+	//res := (*tmResult).(*types.ResultBroadcastTxCommit)
+
+	fmt.Printf("tx result: %x\n", tools.Hash(tx))
+
+	return nil
+}

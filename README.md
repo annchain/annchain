@@ -20,4 +20,4 @@ annchain 采用 dBFT 共识算法，兼容以太坊合约交易。
 	genesis.json          // 创世块信息
 	priv_validator.json   // 节点身份信息
 
-[详细文档](../document/README.md)
+[详细文档](https://github.com/annchain/document/README.md)

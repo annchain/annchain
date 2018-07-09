@@ -57,6 +57,11 @@ type ResultBlock struct {
 	VSet       *ResultValidatorSet `json:"validator_set"`
 }
 
+type ResultBlockRaw struct {
+	BlockMeta *pbtypes.BlockMeta `json:"block_meta"`
+	Block     *pbtypes.Block     `json:"block"`
+}
+
 type ResultValidator struct {
 	Address     hexutil.Bytes `json:"address"`
 	PubKey      hexutil.Bytes `json:"pub_key"`

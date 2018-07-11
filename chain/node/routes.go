@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 package node
 
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"strconv"
 	"strings"
 	"time"
@@ -71,6 +71,7 @@ func (n *Node) rpcRoutes() map[string]*rpc.RPCFunc {
 		"status":          rpc.NewRPCFunc(h.Status, ""),
 		"net_info":        rpc.NewRPCFunc(h.NetInfo, ""),
 		"block":           rpc.NewRPCFunc(h.Block, "height"),
+		"block_raw":       rpc.NewRPCFunc(h.BlockRaw, "height"),
 		"validators":      rpc.NewRPCFunc(h.Validators, ""),
 		"is_validator":    rpc.NewRPCFunc(h.Is_Validator, "pubkey"),
 		"za_surveillance": rpc.NewRPCFunc(h.ZaSurveillance, ""),
@@ -87,7 +88,7 @@ func (n *Node) rpcRoutes() map[string]*rpc.RPCFunc {
 		"contract_payload": rpc.NewRPCFunc(h.ConstructPayload, "payload, abistr"),
 
 		"query_receipt": rpc.NewRPCFunc(h.QueryReceipt, "hash"),
-		"query_tx": rpc.NewRPCFunc(h.QueryTx, "hash"),
+		"query_tx":      rpc.NewRPCFunc(h.QueryTx, "hash"),
 
 		"query_contract": rpc.NewRPCFunc(h.QueryContract, "tx"),
 
@@ -146,6 +147,21 @@ func (h *rpcHandler) Block(height def.INT) (agtypes.RPCResult, error) {
 		return nil, err
 	}
 	res.Block = (&agtypes.ResultBlock{}).Adapt(blockc.Block)
+	return &res, err
+}
+
+func (h *rpcHandler) BlockRaw(height int64) (agtypes.RPCResult, error) {
+	if height == 0 {
+		return nil, fmt.Errorf("height must be greater than 0")
+	}
+	if height > h.node.Angine.Height() {
+		return nil, fmt.Errorf("height must be less than the current blockchain height")
+	}
+	res := agtypes.ResultBlockRaw{}
+	var err error
+	var blockc *agtypes.BlockCache
+	blockc, res.BlockMeta, err = h.node.Angine.GetBlock(height)
+	res.Block = blockc.Block
 	return &res, err
 }
 
@@ -286,7 +302,7 @@ func (h *rpcHandler) QueryContract(tx []byte) (agtypes.ResultQueryContract, erro
 
 //func (h *rpcHandler) QueryContractExistance(addrBytes []byte) (agtypes.ResultQueryContractExistance, error){}
 
-func (h *rpcHandler) QueryTx(txHash []byte) (agtypes.ResultQueryTx, error){
+func (h *rpcHandler) QueryTx(txHash []byte) (agtypes.ResultQueryTx, error) {
 	return h.node.Application.QueryTx(txHash), nil
 }
 

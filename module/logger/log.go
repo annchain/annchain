@@ -21,8 +21,8 @@ import (
 	"os"
 	"runtime"
 
+	"github.com/astaxie/beego/logs"
 	_ "github.com/golang/glog"
-	"github.com/annchain/annchain/module/lib/astaxie/beego/logs"
 )
 
 // RFC5424 log message levels.
@@ -60,7 +60,7 @@ func newLog(logger, jsonconfig string, bufsize int64) (l *Logger, err error) {
 		return nil, err
 	}
 	var config struct {
-		Level int `json:level`
+		Level int `json:"level"`
 	}
 	err = json.Unmarshal([]byte(jsonconfig), &config)
 	if err != nil {

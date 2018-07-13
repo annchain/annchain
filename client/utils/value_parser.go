@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 package utils
 
 import (
@@ -20,7 +19,7 @@ import (
 	"math/big"
 	"strconv"
 
-	"github.com/annchain/annchain/eth/common"
+	"github.com/annchain/anth/common"
 )
 
 func ParseUint8(value interface{}) (uint8, error) {

@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 package app
 
 import (
@@ -23,9 +22,9 @@ import (
 	"time"
 
 	agtypes "github.com/annchain/annchain/angine/types"
-	"github.com/annchain/annchain/eth/rlp"
 	"github.com/annchain/annchain/tools"
 	"github.com/annchain/annchain/types"
+	"github.com/annchain/anth/rlp"
 )
 
 var (

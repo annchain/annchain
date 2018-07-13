@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 package types
 
 import (
 	"bytes"
 
-	"github.com/annchain/annchain/eth/rlp"
 	"github.com/annchain/annchain/types"
+	"github.com/annchain/anth/rlp"
 )
 
 type SuspectTx struct {

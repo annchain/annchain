@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 package commons
 
 import (
@@ -20,7 +19,7 @@ import (
 	"strings"
 
 	"github.com/annchain/annchain/client/utils"
-	"github.com/annchain/annchain/eth/accounts/abi"
+	"github.com/annchain/anth/accounts/abi"
 )
 
 func ParseArgs(methodName string, abiDef abi.ABI, params []interface{}) ([]interface{}, error) {

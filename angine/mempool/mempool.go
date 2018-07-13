@@ -23,14 +23,15 @@ import (
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
 
+	"time"
+
 	agtypes "github.com/annchain/annchain/angine/types"
 	auto "github.com/annchain/annchain/module/lib/go-autofile"
 	"github.com/annchain/annchain/module/lib/go-clist"
 	cmn "github.com/annchain/annchain/module/lib/go-common"
 	"github.com/annchain/annchain/module/xlib/def"
 	"github.com/annchain/annchain/types"
-	"github.com/annchain/annchain/eth/rlp"
-	"time"
+	"github.com/annchain/anth/rlp"
 )
 
 const cacheSize = 100000
@@ -73,10 +74,10 @@ func NewMempool(logger *zap.Logger, config *viper.Viper) *Mempool {
 	//mempool_block_sort_interval: unit millisecond , 0 means disable
 	blockSortInterval := config.GetInt("mempool_block_sort_interval")
 	if blockSortInterval > 0 {
-		go func(){
+		go func() {
 			t := time.Tick(time.Millisecond * time.Duration(blockSortInterval))
-			for{
-				select{
+			for {
+				select {
 				case <-t:
 					mempool.sortTxs()
 				}

@@ -25,10 +25,10 @@ import (
 	pbtypes "github.com/annchain/annchain/angine/protos/types"
 	agtypes "github.com/annchain/annchain/angine/types"
 	"github.com/annchain/annchain/client/commons"
-	"github.com/annchain/annchain/eth/accounts/abi"
 	"github.com/annchain/annchain/module/lib/go-crypto"
 	rpc "github.com/annchain/annchain/module/lib/go-rpc/server"
 	"github.com/annchain/annchain/module/xlib/def"
+	"github.com/annchain/anth/accounts/abi"
 )
 
 const ChainIDArg = "chainid"

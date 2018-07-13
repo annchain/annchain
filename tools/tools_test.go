@@ -12,46 +12,59 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 package tools
 
 import (
-	"math/big"
+	"encoding/base64"
+	"encoding/json"
+	"fmt"
+	"strings"
 	"testing"
 
-	"github.com/annchain/annchain/eth/crypto"
 	"github.com/annchain/annchain/types"
 )
 
 func TestSig(t *testing.T) {
-	privkey, _ := crypto.GenerateKey()
-	addr := crypto.PubkeyToAddress(privkey.PublicKey)
+	s := "AQEB+HeDAV+QAoCU19qwXxIaYZnE2CoBQrc9atlVajmY15Qt52KZvonNe3IpHjXVYXRAK9aefoASuEEjiIgLBpDsqKzbD6WKeuR0LCU8jtebPpyF5fF6tWTJBTg3Us0yyexE6HkQuTrM45zbLZsEc7i2SUdqNdeUpQthAQ=="
+	fmt.Println(len(s), len(s)/4*3)
+	r := base64.NewDecoder(base64.StdEncoding, strings.NewReader(s))
 
-	tx := &types.BlockTx{
-		GasLimit: big.NewInt(444),
-		GasPrice: big.NewInt(444),
-		Sender:   addr[:],
-		Payload:  []byte("xxxx"),
-	}
-
-	if err := TxSign(tx, privkey); err != nil {
-		t.Fatal(err)
-	}
-
-	bs, err := TxToBytes(tx)
+	b := make([]byte, len(s)/4*3)
+	n, err := r.Read(b)
 	if err != nil {
-		t.Fatal(err)
-	}
-	tx2 := &types.BlockTx{}
-	if err = TxFromBytes(bs, tx2); err != nil {
-		t.Fatal(err)
+		panic(err)
 	}
 
-	valid, err := TxVerifySignature(tx2)
+	fmt.Println(n)
+	fmt.Printf("=====%x\n", b[3:5])
+	fmt.Println(string(b))
+
+	tx := &types.BlockTx{}
+	err = FromBytes(b[3:], tx)
 	if err != nil {
-		t.Fatal(err)
+		panic(err)
 	}
-	if !valid {
-		t.Fatal("valid error")
+
+	fmt.Println(tx)
+}
+
+func TestFoo(t *testing.T) {
+	// s := "\"AQEB+HeDAV+QAoCU19qwXxIaYZnE2CoBQrc9atlVajmY15Qt52KZvonNe3IpHjXVYXRAK9aefoASuEEjiIgLBpDsqKzbD6WKeuR0LCU8jtebPpyF5fF6tWTJBTg3Us0yyexE6HkQuTrM45zbLZsEc7i2SUdqNdeUpQthAQ==\""
+	s := "\"AgIBeyJ0byI6IjE5cXdYeElhWVpuRTJDb0JRcmM5YXRsVmFqaz0iLCJhbW91bnQiOjEwMDAwMDAwMDAwMCwiZXh0cmEiOiJhR1ZzYkc4eE1URXhNUT09In0=\""
+
+	var bs []byte
+	err := json.Unmarshal([]byte(s), &bs)
+	if err != nil {
+		panic(err)
 	}
+	fmt.Printf("%x\n", bs)
+
+	tx := &types.BlockTx{}
+	err = FromBytes(bs[3:], tx)
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(tx)
+
 }

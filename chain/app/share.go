@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
 package app
 
 import (
@@ -22,11 +21,11 @@ import (
 	"math/big"
 	"sync"
 
-	"github.com/annchain/annchain/eth/rlp"
 	"github.com/annchain/annchain/module/lib/go-crypto"
 	"github.com/annchain/annchain/module/lib/go-db"
 	"github.com/annchain/annchain/module/lib/go-merkle"
 	"github.com/annchain/annchain/module/xlib/mlist"
+	"github.com/annchain/anth/rlp"
 )
 
 type Share struct {

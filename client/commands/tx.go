@@ -74,10 +74,8 @@ func sendTx(ctx *cli.Context) error {
 	if err != nil {
 		return cli.NewExitError(err.Error(), 127)
 	}
-	fmt.Printf("bodyBs: %#x\n", bodyBs)
 
 	from := crypto.PubkeyToAddress(privkey.PublicKey)
-	fmt.Printf("%x\n", from)
 	tx := types.NewBlockTx(big.NewInt(90000), big.NewInt(2), nonce, from[:], bodyBs)
 
 	if tx.Signature, err = tools.SignSecp256k1(tx, crypto.FromECDSA(privkey)); err != nil {
